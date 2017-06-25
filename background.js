@@ -120,6 +120,14 @@ browser.storage.onChanged.addListener(
     }
 );
 
+browser.notifications.onClicked.addListener(
+    (notificationId) => {
+        if (notificationId === NOTIFICATION_ID) {
+            browser.runtime.openOptionsPage();
+        }
+    }
+);
+
 function updateBlacklist(newBlacklist) {
     blacklist = newBlacklist.filter(Boolean);
 }

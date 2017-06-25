@@ -5,7 +5,7 @@ function restoreOptions() {
         "whitelist",
         "notificationPopupEnabled",
         "notificationDuration",
-        "lastUrl",
+        "lastSkipped",
     ]).then(
         result => {
             document.querySelector("#blacklist").value = result.blacklist.join("\n");
@@ -15,9 +15,9 @@ function restoreOptions() {
             document.querySelector("#notificationDuration").value = result.notificationDuration;
 
             let mrs = document.querySelector("#mrs");
-            if (result.lastUrl) {
+            if (result.lastSkipped) {
                 mrs.classList.remove("hidden");
-                mrs.querySelector("#mrsUrl").textContent = result.lastUrl;
+                mrs.querySelector("#mrsUrl").textContent = result.lastSkipped.url;
             } else {
                 mrs.classList.add("hidden");
             }
@@ -54,9 +54,25 @@ function saveOptions(event) {
     });
 }
 
+function blacklistAddRecent() {
+    browser.storage.local.get([
+        "blacklist",
+        "lastSkipped",
+    ]).then(
+        result => {
+            const regex = result.lastSkipped.prefix.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$0");
+            result.blacklist.push(regex);
+            browser.storage.local.set({
+                blacklist: result.blacklist,
+            })
+        }
+    )
+}
+
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.addEventListener("DOMContentLoaded", enableAutosave);
 document.addEventListener("DOMContentLoaded", loadTranslations);
 document.querySelector("form").addEventListener("submit", saveOptions);
+document.querySelector("#blacklistAddRecent").addEventListener("click", blacklistAddRecent);
 
 browser.storage.onChanged.addListener(restoreOptions);

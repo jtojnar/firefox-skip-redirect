@@ -111,10 +111,21 @@ const url = (function(root) { //  eslint-disable-line no-unused-vars
         return url;
     }
 
+    function getBlacklistRegex(url) {
+        const extractedUrl = getPlainMatches(url) || getBase64Matches(url);
+        if (extractedUrl) {
+            const prefix = url.split(extractedUrl)[0];
+            return prefix;
+        }
+
+        return null;
+    }
+
     root.getRedirectTarget = getRedirectTarget;
 
     return {
         getRedirectTarget: getRedirectTarget,
+        getBlacklistRegex: getBlacklistRegex,
     };
 
 })(this);

@@ -59,6 +59,10 @@
         "message": "Most recently skipped redirect",
         "description": "Title of the popup section displaing information about the most recently skipped redirect."
     },
+    "mrsAddToBlacklist": {
+        "message": "Add to blacklist",
+        "description": "Button for adding the most recent redirect to the blacklist."
+    },
     "optionsTitle": {
         "message": "Options",
         "description": "Title of the options view."
