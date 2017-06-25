@@ -55,6 +55,10 @@
             }
         }
     },
+    "mrsTitle": {
+        "message": "Most recently skipped redirect",
+        "description": "Title of the popup section displaing information about the most recently skipped redirect."
+    },
     "optionsTitle": {
         "message": "Options",
         "description": "Title of the options view."

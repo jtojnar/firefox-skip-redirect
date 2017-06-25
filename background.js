@@ -6,6 +6,8 @@ const MODE_BLACKLIST = "blacklist";
 const BLACKLIST = "blacklist";
 const WHITELIST = "whitelist";
 
+const LAST_URL = "lastUrl";
+
 const NOTIFICATION_ID = "notify-skip";
 const NOTIFICATION_POPUP_ENABLED = "notificationPopupEnabled";
 const NOTIFICATION_DURATION = "notificationDuration";
@@ -158,6 +160,8 @@ function disableSkipping() {
 
     browser.browserAction.setIcon({path: ICON_OFF});
     browser.browserAction.setTitle({title: browser.i18n.getMessage("browserActionLabelOff")});
+
+    browser.storage.local.remove(LAST_URL);
 }
 
 function maybeRedirect(requestDetails) {
@@ -174,6 +178,10 @@ function maybeRedirect(requestDetails) {
     if (redirectTarget == requestDetails.url) {
         return;
     }
+
+    let data = {};
+    data[LAST_URL] = requestDetails.url;
+    browser.storage.local.set(data);
 
     notifySkip(requestDetails.url, redirectTarget);
 

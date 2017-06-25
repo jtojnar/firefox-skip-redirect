@@ -39,3 +39,7 @@ textarea {
     display: block;
     margin: -20px 0 0 25px;
 }
+
+.hidden {
+    display: none;
+}

@@ -5,6 +5,7 @@ function restoreOptions() {
         "whitelist",
         "notificationPopupEnabled",
         "notificationDuration",
+        "lastUrl",
     ]).then(
         result => {
             document.querySelector("#blacklist").value = result.blacklist.join("\n");
@@ -12,6 +13,14 @@ function restoreOptions() {
             document.querySelector("#mode" + result.mode.charAt(0).toUpperCase() + result.mode.slice(1)).checked = "checked";
             document.querySelector("#notificationPopupEnabled").checked = result.notificationPopupEnabled;
             document.querySelector("#notificationDuration").value = result.notificationDuration;
+
+            let mrs = document.querySelector("#mrs");
+            if (result.lastUrl) {
+                mrs.classList.remove("hidden");
+                mrs.querySelector("#mrsUrl").textContent = result.lastUrl;
+            } else {
+                mrs.classList.add("hidden");
+            }
         }
     );
 }
